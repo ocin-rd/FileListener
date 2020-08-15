@@ -1,0 +1,5 @@
+A FileListener which performs the following tasks:
+
+- Loads files from a given directory
+- Extract metadata from the filenames
+- Saves the files in an archive
