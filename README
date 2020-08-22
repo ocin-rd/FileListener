@@ -7,4 +7,25 @@ A FileListener which performs the following tasks:
 How to compile/run:
 
 $ kotlinc FileListener.kt -include-runtime -d FileListener.jar
-$ java -jar FileListener.jar <input directory> <file format>
+$ java -jar FileListener.jar <source directory> <filename format>
+
+Useage:
+
+Valid tokens in <filename format> (case insensitive):
+
+Labname
+PatientNumber
+FirstName
+LastName
+DOB
+ReferenceNumber
+
+Tokens have to separated by underscores, e.g. labname_lastname_dob.
+If <source directory> exists, the contained files are processed; otherwise the directory and a number of random files are created and subsequently processed.
+
+Known limitations:
+
+- Filename format is limited to a combination of above tokens and those tokens being separated by underscores. In principle it would be possible to allow the user to specify any format. However, that makes the task of creating random test data impossible, because one cannot foresee what kind of random data needs to be created.
+- When extracting the metadata the only validity check performed is that the number of tokens matches the number of tokens the user specified. I.e. it is entirely possible to pass a lastname (or indeed any string) as firstname.
+- Date of birth (DOB) is stored as a string, but could be converted into an actual date; similarly patient and reference numbers are held as strings and could be converted into integers.
+- The use of an argument parser would make the use of the command line arguments clearer/safer.
