@@ -107,7 +107,7 @@ class FileListener(val classifier: Classifier, val source_dir: String) {
 	  filename = filename.drop(1)
 	  
 	  var target = file.toString()
-	  target = target.replace(source_dir, archive.toString())
+	  target = target.replaceBeforeLast("/", archive.toString())
 	  if (!File(target).exists()) {
 	     file.copyTo(File(target))
 	     file.delete()

@@ -22,6 +22,7 @@ ReferenceNumber
 
 Tokens have to separated by underscores, e.g. labname_lastname_dob.
 If <source directory> exists, the contained files are processed; otherwise the directory and a number of random files are created and subsequently processed.
+Metadata as extracted from the filename is printed and the files are archived in a directory with the timestamp YYYY-MM-DD.
 
 Known limitations:
 
