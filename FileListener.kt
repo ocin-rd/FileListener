@@ -103,7 +103,7 @@ class FileListener(val classifier: Classifier, val source_dir: String) {
       	  make_archive()
 	  
 	  var filename = file.toString()
-	  filename = filename.replaceBefore("/", "")
+	  filename = filename.replaceBeforeLast("/", "")
 	  filename = filename.drop(1)
 	  
 	  var target = file.toString()
@@ -136,8 +136,10 @@ fun main(args: Array<String>) {
     
     val classifier = Classifier(filename_format)
     
-    /* Remove any trailing slash from the directory path */
-    source_directory = source_directory.replace("/", "")
+    /* Remove any trailing slash (backslash on Windows) from the directory path */
+    if (source_directory.endsWith("/") || source_directory.endsWith("\\")) {
+       source_directory = source_directory.dropLast(1)
+    }
     val dir = File(source_directory)
     if (!dir.exists()) {
        val filefactory = FileFactory(classifier, source_directory)
