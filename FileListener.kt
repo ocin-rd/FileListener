@@ -45,10 +45,16 @@ class FileFactory(val classifier: Classifier, val directory: String) {
 	  for (i in 1..n) {
 	      var filename: String = ""
 	      for (data in classifier.content) {
-	      	  filename += random_data.get(classifier.data_fields.elementAt(data)).random()
-	      	  if (data != classifier.content.last()) {
-	      	     filename += "_"
-	      	  }
+	      	  val entries = random_data.get(classifier.data_fields.elementAt(data))
+		  if (entries != null) {
+	      	     filename += entries.random()
+	      	     if (data != classifier.content.last()) {
+	      	     	filename += "_"
+	      	     }
+		  }
+		  else {
+		     error("${classifier.data_fields.elementAt(data)} is an invalid data field in the random file generation")
+		  }
 	      }
 	      File(directory + "/" + filename + ".txt").writeText("Very important patient data.")
 	   }
