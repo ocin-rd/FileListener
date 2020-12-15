@@ -140,9 +140,9 @@ fun main(args: Array<String>) {
 	var source_directory = args[0]
 	val filename_format = args[1]
 
-    val classifier = Classifier(filename_format)
+	val classifier = Classifier(filename_format)
 
-    /* Remove any trailing slash (backslash on Windows) from the directory path */
+	/* Remove any trailing slash (backslash on Windows) from the directory path */
 	if (source_directory.endsWith("/") || source_directory.endsWith("\\")) {
 		source_directory = source_directory.dropLast(1)
 	}
