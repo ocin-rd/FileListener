@@ -1,5 +1,6 @@
 import java.io.File
 import java.time.LocalDate
+import java.time.Instant
 
 /* This class takes a format definition and finds the matching data field.
    The result is a list of integers which are indices into the data field set */
@@ -72,14 +73,21 @@ class FileListener(val classifier: Classifier, val source_dir: String) {
 		val walker = source.walk()
 		val file_iterator = walker.iterator()
 		file_iterator.forEach {
+			/* Check that it is a file, and that it is not currently written to. */
 			if (it.isFile()) {
-				val is_valid = extract_metadata(it)
-				if (is_valid) {
-					archive_file(it)
-					println()
+				/* Only files that haven't been modified within the last five seconds will be archived */
+				if (Instant.now().toEpochMilli() - it.lastModified() > 5000) {
+					val is_valid = extract_metadata(it)
+					if (is_valid) {
+						archive_file(it)
+						println()
+					}
+					else {
+						println("Skipping file ${it} because it does not match the given format.")
+					}
 				}
 				else {
-					println("Skipping file ${it} because it does not match the given format.")
+					println("Skipping file ${it} because it is currently written to.")
 				}
 			}
 		}
